@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express')
 const morgan = require('morgan')
 const router = require('./routes');
@@ -7,7 +8,8 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('tiny'));
-app.use('/', router);
+app.use(express.static('public'));
+app.use(router);
 
 // Final step
 const port = 3000;

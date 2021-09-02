@@ -41,6 +41,7 @@ const reconstructCard = (card, transactionList) => { // Add balance, spending, t
     const transactions = transactionList.filter(transaction => transaction.cardId === card.id);
     const {spending, balance} = updateBalance(transactions, card.limit);
     const cardInfo = Object.assign({}, card);
+    cardInfo.limit = formatter.format(cardInfo.limit);
     cardInfo.spending = formatter.format(spending);
     cardInfo.balance = formatter.format(balance);
     cardInfo.transactions = transactions;
