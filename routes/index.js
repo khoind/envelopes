@@ -167,7 +167,7 @@ router.post('/total/:limit', checkLimit, (req, res, next) => {
 
 // Get summary info
 router.get('/total', (req, res, next) => {
-    let message = 'No credit line has been set yet';
+    let message = '🥲 No credit line has been set yet';
     let data = {};
     if (activation) {
         if (cardList.length === 0) {
@@ -267,8 +267,20 @@ router.delete('/cards', checkActivation, (req, res, next) => {
 router.delete('/transactions/', checkActivation, checkIfThereAreTransactions, checkDuration, (req, res, next) => {
     const currentTime = new Date;
     const duration = req.duration;
+    console.log('Processing delete recent')
     transactionList = transactionList.filter(transaction => checkTimeGap(transaction, currentTime, duration));
     res.status(200).send(`All transactions created within ${duration} minute(s) have been deleted`)
+})
+
+// Delete everything
+router.delete('/total', (req, res, next) => {
+    activation = false;
+    totalLimit = 0;
+    totalBalance = 0;
+    totalSpending = 0;
+    cardList = [];
+    transactionList = [];
+    res.status(201).send(`Everything is deleted. Back from the beginning!`)
 })
 
 module.exports = router;
