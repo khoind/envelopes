@@ -155,14 +155,13 @@ const renderCards = async (response) => {
     } 
     const cards = await response.json();
     for (card of cards) {
+        const {name, limit, spending, balance} = card;
         const cardDiv = document.createElement('div');
-        cardDiv.innerHTML += `<p><em>${card.name}</em></p>`;
-        const cardProps = document.createElement('ul')
-        for (prop in card) {
-            if (prop !== 'name') {
-                cardProps.innerHTML += `<li>${prop}: ${card[prop]}</li>`
-            } 
-        }
+        cardDiv.innerHTML += `<p><em>${name}</em></p>`;
+        const cardProps = document.createElement('ul');
+        cardProps.innerHTML += `<li>Limit: ${limit}</li>`;
+        cardProps.innerHTML += `<li>Spending: ${spending}</li>`;
+        cardProps.innerHTML += `<li>Balance: ${balance}</li>`;
         cardDiv.append(cardProps);
         showCardsResponse.append(cardDiv);
     }
@@ -170,7 +169,6 @@ const renderCards = async (response) => {
 }
 
 const updateCards = () => {
-    console.log('Did this run?');
     fetchCards().then(renderCards).then(renderCardSelect);
     return false
 }
