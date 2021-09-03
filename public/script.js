@@ -1,5 +1,7 @@
 const baseRoute = 'http://localhost:3000/';
 
+let cards = [];
+
 // Helper
 const renderResponse = async (arr) => {
     const [el, response] = arr;
@@ -56,48 +58,11 @@ const fetchCardApproval = async () => {
 postCardBttn.addEventListener("click", (event) => {
     fetchCardApproval().then(renderResponse);
     updateSummary(event);
+    updateCards(event);
+    renderCardSelect();
     event.preventDefault();
     return false
 }, false)
-
-// Fetch and show all cards
-const showCardsBttn = document.getElementById('show-cards-bttn');
-const showCardsResponse = document.getElementById('show-cards-response')
-
-const fetchAllCards = async () => {
-    const url = baseRoute + 'cards';
-    const response = await fetch(url);
-    return response
-}
-
-const renderAllCards = async (response) => {
-    showCardsResponse.innerHTML = '';
-    if (response.ok) {
-        const cards = await response.json();
-        for (card of cards) {
-            const cardDiv = document.createElement('div');
-            cardDiv.setAttribute('class', 'card-info');
-            cardDiv.innerHTML += `<p><strong>${card.name}</strong></p>`;
-            const cardProps = document.createElement('ul')
-            for (prop in card) {
-                if (prop !== 'transactions' & prop !== 'name') {
-                    cardProps.innerHTML += `<li>${prop}: ${card[prop]}</li>`
-                } 
-            }
-            cardDiv.append(cardProps);
-            showCardsResponse.append(cardDiv);
-        }
-    } else {
-        const text = await response.text();
-        showCardsResponse.innerHTML += `<p><strong>🥲 Failure </strong> ${text}</p>`
-    }
-}
-
-showCardsBttn.addEventListener('click', (event) => {
-    fetchAllCards().then(renderAllCards);
-    event.preventDefault();
-    return false
-})
 
 // Record transactions
 const postTransactionStartBttn = document.getElementById('post-transaction-start');
@@ -105,13 +70,7 @@ const postTransactionSubmitBttn = document.getElementById('post-transaction-subm
 const postTransactionResponse = document.getElementById('post-transaction-response');
 const selectCard = document.getElementById('post-transaction-card-input');
 
-const renderCardSelect = async () => {
-    const response = await fetchAllCards();
-    if (!response.ok) {
-        postTransactionResponse.innerHTML += `<p>${await response.text()}</p>`
-        return false
-    }
-    const cards = await response.json();
+const renderCardSelect = () => {
     selectCard.innerHTML = ""
     for (card of cards) {
         selectCard.innerHTML += `<option value="${card.id}">${card.name}</option>`
@@ -134,15 +93,11 @@ const fetchTransactionApproval = async () => {
     return [postTransactionResponse, response]
 }
 
-postTransactionStartBttn.addEventListener('click', async (event) => {
-    await renderCardSelect();
-    event.preventDefault();
-    return false
-})
-
 postTransactionSubmitBttn.addEventListener('click', (event) => {
     fetchTransactionApproval().then(renderResponse);
     updateSummary(event);
+    updateTransactions(event);
+    updateCards(event);
     event.preventDefault();
     return false
 })
@@ -161,7 +116,7 @@ const fetchSummary = async () => {
 }
 
 const renderSummary = (jsonResponse) => {
-    summarySection.innerHTML = '<h2>Summary</h2>'
+    summarySection.innerHTML = '';
     summarySection.innerHTML += `<p><strong>${jsonResponse.message}</strong></p>`;
     const data = jsonResponse.data;
     if (Object.keys(data).length > 0) {
@@ -183,4 +138,78 @@ const updateSummary = (event) => {
 window.onload = (event) => {
     updateSummary(event);
     return false
+}
+
+// Fetch and show all cards
+const showCardsResponse = document.getElementById('show-cards-response');
+
+const fetchCards = async () => {
+    const url = baseRoute + 'cards';
+    const response = await fetch(url);
+    return response
+}
+
+const renderCards = async (response) => {
+    showCardsResponse.innerHTML = `<p><strong>List of cards</strong></p>`;
+    if (response.ok) {
+        cards = await response.json();
+        for (card of cards) {
+            const cardDiv = document.createElement('div');
+            cardDiv.innerHTML += `<p><em>${card.name}</em></p>`;
+            const cardProps = document.createElement('ul')
+            for (prop in card) {
+                if (prop !== 'name') {
+                    cardProps.innerHTML += `<li>${prop}: ${card[prop]}</li>`
+                } 
+            }
+            cardDiv.append(cardProps);
+            showCardsResponse.append(cardDiv);
+        }
+    } else {
+        const text = await response.text();
+        showCardsResponse.innerHTML += `<p><strong>🥲 ${text}</p>`
+    }
+    return false
+}
+
+const updateCards = (event) => {
+    fetchCards().then(renderCards);
+    return false
+}
+
+// Fetch and show transactions
+const showTransactionsResponse = document.getElementById('show-transactions-response');
+
+const fetchTransactions = async () => {
+    const url = baseRoute + 'transactions';
+    const response = await fetch(url);
+    return response
+}
+
+const renderTransactions = async (response) => {
+    showTransactionsResponse.innerHTML = '<p><strong>List of transactions</strong></p>';
+    if (!response.ok) {
+        const text = await response.text();
+        showTransactionsResponse.innerHTML += `<p><strong>🥲 ${text}</p>`
+        return false
+    }
+    const transactions = await response.json();
+    for (txn of transactions) {
+        const txnDiv = document.createElement('div');
+        txnDiv.innerHTML += `<em>At ${txn.timestamp}</em>`;
+        const txnProps = document.createElement('ul');
+        for (prop in txn) {
+            if (prop !== 'timestamp') {
+                txnProps.innerHTML += `<li>${prop}: ${txn[prop]}</li>`;
+            }
+        }
+        txnDiv.append(txnProps);
+        showTransactionsResponse.append(txnDiv)
+    }
+    return false
+}
+
+const updateTransactions = (event) => {
+    fetchTransactions().then(renderTransactions);
+    return false;
 }

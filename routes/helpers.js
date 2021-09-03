@@ -44,7 +44,6 @@ const reconstructCard = (card, transactionList) => { // Add balance, spending, t
     cardInfo.limit = formatter.format(cardInfo.limit);
     cardInfo.spending = formatter.format(spending);
     cardInfo.balance = formatter.format(balance);
-    cardInfo.transactions = transactions;
     return cardInfo
 }
 

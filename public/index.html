@@ -7,11 +7,12 @@
             Your Debit Cards
         </title>
         <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
     </head>
     <body>
 
         <h1>
-            Your Credit Cards
+            Your Credit Card
         </h1>
 
         <section>
@@ -28,8 +29,11 @@
             </p>
         </section>
 
-        <section id="summary-section">
-            <h2>Summary</h2>
+        <section id="dashboard">
+            <h2>Dashboard</h2>
+            <section id="summary-section"></section>
+            <section id="show-cards-response"></section>
+            <section id="show-transactions-response"></section>
         </section>
 
         <section id="post-total-limit-section">
@@ -57,15 +61,8 @@
             <div id="post-card-response"></div>
         </section>
 
-        <section id="show-cards-section">
-            <h2>Show cards</h2>
-            <button id="show-cards-bttn">Show card list</button>
-            <div id="show-cards-response"></div>
-        </section>
-
         <section id="post-transaction-section">
             <h2>Record transaction</h2> 
-            <button id="post-transaction-start">Start</button>
             <form id="post-transaction-form">
                 <lable for="post-transaction-card-input">Choose card</lable>
                 <select id="post-transaction-card-input" name="card"></select>
@@ -81,7 +78,6 @@
             <div id="post-transaction-response">
             </div>
         </section>
-
-        <script src="script.js"></script>
+                
     </body>
 </html>
