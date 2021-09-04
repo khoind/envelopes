@@ -131,6 +131,7 @@ postTransactionSubmitBttn.addEventListener('click', (event) => {
     postTransaction().then(renderResponse);
     updateSummary();
     updateTransactions();
+    updateCards();
     event.preventDefault();
     return false
 })
