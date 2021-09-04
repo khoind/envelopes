@@ -1,4 +1,8 @@
 const baseRoute = 'http://localhost:3000/';
+const formatter = new Intl.NumberFormat('en-US', { // Format number as currency
+    style: 'currency',
+    currency: 'VND'
+})
 
 // Helper
 const renderResponse = async (arr) => {
@@ -28,9 +32,38 @@ const postTotalLimit = async () => {
 postTotalLimitBttn.addEventListener("click", (event) => {
     postTotalLimit().then(renderResponse);
     updateSummary();
+    updateLimitSlider();
     event.preventDefault();
     return false
 }, false);
+
+// Render limit slider
+const limitSlider = document.getElementById("post-card-limit-slider")
+const sliderValue = document.getElementById("slider-value")
+sliderValue.innerHTML = formatter.format(0);
+
+const updateLimitSlider = async () => {
+    console.log('updateLimitSlider starts running')
+    console.log(`min = ${limitSlider.min}, max = ${limitSlider.max}`)
+    const url = baseRoute + "unused";
+    const response = await fetch(url);
+    if (!response.ok) {
+        console.log('GET /unused failed')
+        return false
+    } 
+    limitSlider.max = await response.json();
+    console.log('updateLimitSlider has run')
+    console.log(`min = ${limitSlider.min}, max = ${limitSlider.max}`)
+    return false
+}
+
+const updateLiveSliderValue = () => {
+    const value = limitSlider.value;
+    sliderValue.innerHTML = formatter.format(value);
+    return false
+}
+
+limitSlider.addEventListener("input", updateLiveSliderValue);
 
 // Issue new card and display response
 const postCardBttn = document.getElementById('post-card-submit');
@@ -39,7 +72,7 @@ const postCardlimitInput = document.getElementById('post-card-limit-input');
 const postCardResponse = document.getElementById('post-card-response');
 
 const postCard = async () => {
-    const limit = postCardlimitInput.value;
+    const limit = limitSlider.value;
     const name = postCardNameInput.value;
     const url = baseRoute + 'cards';
     const data = {name, limit};
@@ -57,6 +90,7 @@ postCardBttn.addEventListener("click", (event) => {
     postCard().then(renderResponse);
     updateSummary();
     updateCards();
+    updateLimitSlider();
     event.preventDefault();
     return false
 }, false)
@@ -127,6 +161,7 @@ const renderSummary = (jsonResponse) => {
         ul.innerHTML += `<li>Cards: ${cardNames.join(', ')}</li>`;
         summarySection.append(ul)
     }
+    return false
 }
 
 const updateSummary = () => {
@@ -135,7 +170,10 @@ const updateSummary = () => {
     return false
 }
 
-window.onload = updateSummary;
+window.onload = () => {
+    updateSummary();
+    updateLimitSlider();
+}
 
 // Fetch and show all cards
 const showCardsResponse = document.getElementById('show-cards-response');
@@ -150,7 +188,7 @@ const renderCards = async (response) => {
     showCardsResponse.innerHTML = `<p><strong>List of cards</strong></p>`;
     if (!response.ok) {
         const text = await response.text();
-        showCardsResponse.innerHTML += `<p><strong>🥲 ${text}</p>`
+        showCardsResponse.innerHTML += `<p>🥲 ${text}</p>`
         return false  
     } 
     const cards = await response.json();

@@ -1,32 +1,115 @@
 body {
-    background-color: green;
     margin: 0px;
+    color:rgb(1, 97, 1);
 }
 
 #title {
-    background-color: black;
-    color: goldenrod;
+    background-color: white;
+    color: black;
     text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 2em;
+}
+
+h1, h2 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+    color: darkslategrey;
+}
+
+#instruction {
+    color: rgb(2, 75, 47);
+    font-family: Verdana, Geneva, Tahoma, sans-serif ;
+    background-color:rgb(222, 252, 234);
+    border: solid rgb(222, 252, 234);
+    padding-inline: 5%;
 }
 
 #main {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin:0px;
-}
-
-#instruction {
-    color: rgb(0, 49, 0);
-    background-color:rgb(231, 252, 222);
+    display: flex;
+    color:rgb(1, 97, 1)
 }
 
 #dashboard {
-    color:rgb(78, 6, 6);
+    color:rgb(95, 4, 54);
     background-color: rgb(250, 225, 229);
+    border: solid rgb(250, 225, 229);
+    padding-inline: 5%;
+    flex-grow: 1;
 }
 
 #control {
-    color:rgb(1, 1, 75);
+    color:rgb(2, 2, 109);
     background-color: lightcyan;
+    border: solid lightcyan;
+    padding-inline: 5%;
+    flex-grow: 1.67;
 }
+
+button {
+    background-color: rgb(160, 240, 240);
+    color: rgb(2, 2, 109);
+    border-color: rgb(2, 2, 109);
+    transition-duration: 0.2s;
+    width: 90px;
+}
+
+button:hover {
+    background-color:rgb(83, 124, 124); /* Green */
+    color: white;
+}
+
+.response {
+    color: rgb(95, 4, 54);
+}
+
+button, input, select {
+    font-family: inherit;
+    font-size: 100%;
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input, select {
+    width : 250px;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    display: table-cell;
+    float: right;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 55%;
+    font-style: italic;
+}
+
+form {
+    display: table;
+    width: 100%;
+}
+
+.row {
+    display: table-row;
+    margin-bottom: 80px;
+}
+
+label { 
+    display: table-cell;
+    text-align: right;
+    float: left;
+    width: 40%;
+}
+
+#slider-value {
+    float: right;
+    font-style: italic;
+    color:black;
+    background-color: white;
+}
+
+

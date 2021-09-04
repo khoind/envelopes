@@ -12,28 +12,28 @@
     <body>
         <section id="title">
             <h1>
-                Your Credit Card
+                ✨ Manage Your Credit Cards ✨
             </h1>
+        </section>
+
+        <section id="instruction">
+            <h2>Instructions ℹ️</h2>
+            <p>
+                With this web app provided by <em>Your Bank</em>, you can:
+                <ul>
+                    <li>Apply for a personal credit line</li>
+                    <li>Open one or more credit cards</li>
+                    <li>Record transactions and view transaction history</li>
+                    <li>Reallocate the overall credit line between cards</li>
+                </ul>
+                Enjoy your spending!
+            </p>
         </section>
 
         <section id="main">
             
-            <section id="instruction">
-                <h2>Instructions</h2>
-                <p>
-                    With this web app provided by <em>Your Bank</em>, you can:
-                    <ul>
-                        <li>Apply for a personal credit line</li>
-                        <li>Open one or more credit cards</li>
-                        <li>Record transactions and view transaction history</li>
-                        <li>Reallocate the overall credit line between cards</li>
-                    </ul>
-                    Enjoy your spending!
-                </p>
-            </section>
-    
             <section id="dashboard">
-                <h2>Dashboard</h2>
+                <h2>Dashboard 📺</h2>
                 <section id="summary-section"></section>
                 <section id="show-cards-response" class="response"></section>
                 <section id="show-transactions-response" class="response"></section>
@@ -42,63 +42,79 @@
             <section id="control">
                 
                 <section id="post-total-limit-section">
-                <h2>Apply for a line of credit</h2>
-                <form id="post-total-limit-form">
-                    <label for="post-total-limit-input">Overall credit line in VND: </label>
-                    <input id="post-total-limit-input" type="number" name="limit" placeholder="Min VND 5,000,000" min="5000000" step="500000">
-                    <br>
+                    <h2>Apply for a line of credit 🤑</h2>
+                    <form id="post-total-limit-form">
+                        <p class="row">
+                            <label for="post-total-limit-input">Overall credit line</label>
+                            <input id="post-total-limit-input" type="number" name="limit" placeholder="Min VND 5,000,000" min="5000000" step="500000">
+                        </p>
+                    </form>
                     <button id="post-total-limit-submit">Submit</button>
-                </form>
-                <div id="post-total-limit-response" class="response"></div>
-            </section>
+                    <div id="post-total-limit-response" class="response"></div>
+                </section>
     
-            <section id="post-card-section">
-                <h2>Issue a new card</h2>
-                <form id="post-card-form">
-                    <label for="post-card-name-input">Card name</label>
-                    <input id="post-card-name-input" name="name" type="text" placeholder="e.g., Diamond">
-                    <br>
-                    <label for="post-card-limit-input">Card limit</label>
-                    <input id="post-card-limit-input" name="limit" type="number" placeholder="Min VND 5,000,000" min="5000000" step="100000">
-                    <br>
+                <section id="post-card-section">
+                    <h2>Issue a new card 💳</h2>
+                    <form id="post-card-form">
+                        <p class="row">
+                            <label for="post-card-name-input">Card name</label>
+                            <input id="post-card-name-input" name="name" type="text" placeholder="e.g., Diamond">   
+                        </p>
+                        <p class="row">
+                            <label for="post-card-limit-slider">Card limit</label>
+                            <input id="post-card-limit-slider" type="range" step="500000" min="0" value="0">
+                        </p>
+                        <p class="row">
+                            <label></label>
+                            <div id="slider-value"></div>
+                        </p>
+                    </form>
                     <button id="post-card-submit">Submit</button>
-                </form>
-                <div id="post-card-response" class="response"></div>
-            </section>
+                    <div id="post-card-response" class="response"></div>
+                    <br>
+                </section>
     
-            <section id="post-transaction-section">
-                <h2>Record transaction</h2> 
-                <form id="post-transaction-form">
-                    <lable for="post-transaction-card-input">Choose card</lable>
-                    <select id="post-transaction-card-input" name="card"></select>
-                    <br>
-                    <lable for="post-transaction-amount-input">Enter amount</lable>
-                    <input id="post-transaction-amount-input" name="amount" type="number" step="1000" placeholder="VND">
-                    <br>
-                    <lable for="post-transaction-purpose-input">Enter purpose</lable>
-                    <input id="post-transaction-purpose-input" name="purpose" type="text" placeholder="e.g., groceries">
-                    <br>
+                <section id="post-transaction-section">
+                    <h2>Record transaction 💸</h2> 
+                    <form id="post-transaction-form">
+                        <p class=row>
+                            <label for="post-transaction-card-input">Choose card</label>
+                            <select id="post-transaction-card-input" name="card"></select>
+                        </p>
+                        <p class="row">
+                            <label for="post-transaction-amount-input">Enter amount</label>
+                            <input id="post-transaction-amount-input" name="amount" type="number" step="1000" placeholder="VND">
+                        </p>
+                        <p class="row">
+                            <label for="post-transaction-purpose-input">Enter purpose</label>
+                            <input id="post-transaction-purpose-input" name="purpose" type="text" placeholder="e.g., groceries">
+                        </p>
+                    </form>
                     <button id="post-transaction-submit">Submit</button>
-                </form>
-                <div id="post-transaction-response" class="response"></div>
-            </section>
-    
-            <section id="delete-txns">
-                <h2>Delete transactions</h2>
-                <form>
-                    <lable for="delete-txns-input">Delete all transactions recorded within</lable>
-                    <input id="delete-txns-input" name="duration" type="number" placeholder="minutes">
+                    <div id="post-transaction-response" class="response"></div>
                     <br>
-                    <button id="delete-txns-bttn">Submit</button>
-                </form>
-                <div id="delete-txns-response" class="response"></div>
-            </section>
+                </section>
     
-            <section id="delete-all-section">
-                <h2>Delele everything!</h2>
-                <button id="delete-all-bttn">Boom 💥</button>
-                <div id="delete-all-response" class="response"></div>
-            </section>
+                <section id="delete-txns">
+                    <h2>Delete transactions 🧽</h2>
+                    <form>
+                        <p class="row">
+                            <label for="delete-txns-input">Delete all transactions recorded within</label>
+                            <input id="delete-txns-input" name="duration" type="number" placeholder="minutes">
+                        </p>
+                    </form>
+                    <button id="delete-txns-bttn">Submit</button>
+                    <div id="delete-txns-response" class="response"></div>
+                    <br>
+                </section>
+    
+                <section id="delete-all-section">
+                    <h2>Reset! ↺</h2>
+                    <span>This button will erase all data</span>
+                    <button id="delete-all-bttn">Boom 💥</button>
+                    <div id="delete-all-response" class="response"></div>
+                    <br>
+                </section>
     
             </section>
         

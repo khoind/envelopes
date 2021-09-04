@@ -59,8 +59,8 @@ const checkNewCardRequest = (req, res, next) => { // Validate request for a new 
 
     const limit = Number(req.body.limit);
     const name = req.body.name.toString().trim();
-    if (Number.isNaN(limit) || limit < 5000000) {
-        return res.status(400).send('Proposed limit must be a number and at least VND 5,000,000')
+    if (Number.isNaN(limit)) {
+        return res.status(400).send('Proposed limit must be a number')
     }
     if (name === "") {
         return res.status(400).send('The new card must have a non empty name')
@@ -186,6 +186,12 @@ router.get('/total', (req, res, next) => {
         }
     }
     res.status(200).send({message, data})
+})
+
+// Get unused limit
+router.get('/unused', (req, res, next) => {
+    const unusedLimit = updateUnusedLimit(cardList, totalLimit);
+    res.status(200).send(unusedLimit.toString())
 })
 
 // Get all cards
