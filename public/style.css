@@ -39,6 +39,8 @@ h1 {
     border: solid rgb(250, 225, 229);
     padding-inline: 5%;
     flex-grow: 1;
+    overflow-y: scroll; 
+    height: 700px;
 }
 
 #control {
@@ -47,6 +49,7 @@ h1 {
     border: solid lightcyan;
     padding-inline: 5%;
     flex-grow: 1.67;
+    height: 700px;
 }
 
 button {
@@ -111,5 +114,6 @@ label {
     color:black;
     background-color: white;
 }
+
 
 

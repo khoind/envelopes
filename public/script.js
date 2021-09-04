@@ -173,6 +173,7 @@ const updateSummary = () => {
 
 window.onload = () => {
     updateSummary();
+    updateCards();
     updateLimitSlider();
 }
 
